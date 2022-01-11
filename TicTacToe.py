@@ -1,7 +1,6 @@
 # CSE 210 - W02 Prove Submission - Tic Tac Toe
 # Author - Jacob Dabling
 
-#import keyboard
 from colorama import Fore, Style
 
 def main():
@@ -12,22 +11,27 @@ def main():
             ["7", "|", "8", "|", "9"]]
     print("Welcome! Press the number of the square you'd like to place on.")
     print("Then press ENTER")
-    #outputBoard(board)
     
     key = ' '
     team = True # true is for X team, and false for O team.
     while key != 'q':
+        # Checks to see if the game has been won.
         if checkGameWin(board):
             outputBoard(board, team)
             print("Congradulations! You won!")
             break;
         else:
             team = not team
+
         outputBoard(board, team)
+        
+        # Tell the players who's turn it is.
         if team:
             print("\33[31mPlayer X's turn!")
         else:
             print("\33[32mPlayer O's turn!")
+
+        # Get ready to accept user input.
         key = input("Box number: ")
         print("\n")
         if(key=='1'):
@@ -50,7 +54,7 @@ def main():
             board = editSpace(board, (4,4), team)
         
         
-
+# Checks the game board to see if a player has won.
 def checkGameWin(board):
     # Check first for horizontal victories.
     if board[0][0] == board[0][2] == board[0][4]:
@@ -77,6 +81,7 @@ def checkGameWin(board):
     # If no victory conditions are met, return false.
     return False
 
+# Given a space on the board, insert the appropriate symbol.
 def editSpace(board, space, team):
     if team:
         board[space[0]][space[1]] = 'X'
