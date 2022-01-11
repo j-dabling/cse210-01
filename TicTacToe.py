@@ -9,50 +9,69 @@ def main():
             ["4", "|", "5", "|", "6"],
             ["-", "-", "-", "-", "-"],
             ["7", "|", "8", "|", "9"]]
-    outputBoard(board)
     print("Welcome! Press the number of the square you'd like to place on.")
     print("Then press ENTER")
+    #outputBoard(board)
     
     key = ' '
     team = True # true is for X team, and false for O team.
     while key != 'q':
-        key = input()
+        if checkGameWin(board):
+            outputBoard(board)
+            print("Congradulations! You won!")
+            break;
+        else:
+            team = not team
+        outputBoard(board)
+
+        key = input("Box number: ")
+        print("\n")
         if(key=='1'):
             board = editSpace(board, (0,0), team)
-            team = not team
-            outputBoard(board)
         elif(key=='2'):
             board = editSpace(board, (0,2), team)
-            team = not team
-            outputBoard(board)
         elif(key=='3'):
             board = editSpace(board, (0,4), team)
-            team = not team
-            outputBoard(board)
         elif(key=='4'):
             board = editSpace(board, (2,0), team)
-            team = not team
-            outputBoard(board)
         elif(key=='5'):
             board = editSpace(board, (2,2), team)
-            team = not team
-            outputBoard(board)
         elif(key=='6'):
             board = editSpace(board, (2,4), team)
-            team = not team
-            outputBoard(board)
         elif(key=='7'):
             board = editSpace(board, (4,0), team)
-            team = not team
-            outputBoard(board)
         elif(key=='8'):
             board = editSpace(board, (4,2), team)
-            team = not team
-            outputBoard(board)
         elif(key=='9'):
             board = editSpace(board, (4,4), team)
-            team = not team
-            outputBoard(board)
+        
+        
+
+def checkGameWin(board):
+    # Check first for horizontal victories.
+    if board[0][0] == board[0][2] == board[0][4]:
+        return True
+    elif board[2][0] == board[2][2] == board[2][4]:
+        return True
+    elif board[4][0] == board[4][2] == board[4][4]:
+        return True
+    
+    # Then check for vertical victories.
+    elif board[0][0] == board[2][0] == board[4][0]:
+        return True
+    elif board[0][2] == board[2][2] == board[4][2]:
+        return True
+    elif board[0][4] == board[2][4] == board[4][4]:
+        return True
+
+    # Then check for diagonals.
+    elif board[0][0] == board[2][2] == board[4][4]:
+        return True
+    elif board[4][0] == board[2][2] == board[0][4]:
+        return True
+    
+    # If no victory conditions are met, return false.
+    return False
 
 def editSpace(board, space, team):
     if team:
