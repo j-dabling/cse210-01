@@ -2,12 +2,13 @@
 # Author - Jacob Dabling
 
 #import keyboard
+from colorama import Fore, Style
 
 def main():
     board = [["1", "|", "2", "|", "3"],
-            ["-", "-", "-", "-", "-"],
+            ["-", "+", "-", "+", "-"],
             ["4", "|", "5", "|", "6"],
-            ["-", "-", "-", "-", "-"],
+            ["-", "+", "-", "+", "-"],
             ["7", "|", "8", "|", "9"]]
     print("Welcome! Press the number of the square you'd like to place on.")
     print("Then press ENTER")
@@ -17,13 +18,16 @@ def main():
     team = True # true is for X team, and false for O team.
     while key != 'q':
         if checkGameWin(board):
-            outputBoard(board)
+            outputBoard(board, team)
             print("Congradulations! You won!")
             break;
         else:
             team = not team
-        outputBoard(board)
-
+        outputBoard(board, team)
+        if team:
+            print("\33[31mPlayer X's turn!")
+        else:
+            print("\33[32mPlayer O's turn!")
         key = input("Box number: ")
         print("\n")
         if(key=='1'):
@@ -81,7 +85,7 @@ def editSpace(board, space, team):
     return board
 
 # Prints the current state of the board to the console.
-def outputBoard(board):
+def outputBoard(board, team):
     i = 0
     for row in board:
         if(i%2 == 0):
